@@ -142,4 +142,54 @@ nombre Capacitaciones Económicos. */
 create table capacitaciones_economicas as select nombre, costo_realizacion from capacitacion where costo_realizacion < (select avg(costo_realizacion) from capacitacion);
 select * from capacitaciones_economicas;
 
+/*A la tabla Capacitaciones Económicos, agrégale dos campos. ‘Cantidad mínima estudiantes’ y 
+‘Aportes públicos’. La cantidad mínima de estudiantes se refiere al número mínimo de estudiantes 
+necesarios para su realización. Los aportes públicos refieren a los aportes entregados por 
+instituciones públicas para la realización del curso (tiene que ser un valor menor al costo total del 
+curso). */
 
+alter table capacitaciones_economicas add column cantidad_minima_estudiantes int;
+update capacitaciones_economicas set cantidad_minima_estudiantes = 10 where nombre = 'Comunicación I Vespertino';
+update capacitaciones_economicas set cantidad_minima_estudiantes = 20 where nombre = 'Introducción a la programación Matutino';
+update capacitaciones_economicas set cantidad_minima_estudiantes = 20 where nombre = 'Introducción a la programación Vespertino';
+update capacitaciones_economicas set cantidad_minima_estudiantes = 15 where nombre = 'Introducción al Desarrollo Web Matutino';
+update capacitaciones_economicas set cantidad_minima_estudiantes = 10 where nombre = 'Comunicación I Matutino';
+
+alter table capacitaciones_economicas add column aportes_publicos float;
+update capacitaciones_economicas set aportes_publicos = 50540.22 where nombre = 'Comunicación I Vespertino';
+update capacitaciones_economicas set aportes_publicos = 45340.77 where nombre = 'Introducción a la programación Matutino';
+update capacitaciones_economicas set aportes_publicos = 60540.89 where nombre = 'Introducción a la programación Vespertino';
+update capacitaciones_economicas set aportes_publicos = 34540.14 where nombre = 'Introducción al Desarrollo Web Matutino';
+update capacitaciones_economicas set aportes_publicos = 20540.72 where nombre = 'Comunicación I Matutino';
+
+select * from capacitaciones_economicas;
+
+/*Renombre la columna “Costo realización” en la tabla Capacitaciones económicas. El nombre 
+nuevo debe ser: Costo efectivo. En dicha columna, a cada valor se le debe restar el valor de 
+‘Aportes públicos’. */
+
+alter table capacitaciones_economicas change costo_realizacion costo_efectivo float;
+
+update capacitaciones_economicas set costo_efectivo = costo_efectivo - 50540.22 where nombre = 'Comunicación I Vespertino';
+update capacitaciones_economicas set costo_efectivo = costo_efectivo - 45340.77 where nombre = 'Introducción a la programación Matutino';
+update capacitaciones_economicas set costo_efectivo = costo_efectivo - 60540.89 where nombre = 'Introducción a la programación Vespertino';
+update capacitaciones_economicas set costo_efectivo = costo_efectivo - 34540.14 where nombre = 'Introducción al Desarrollo Web Matutino';
+update capacitaciones_economicas set costo_efectivo = costo_efectivo - 20540.72 where nombre = 'Comunicación I Matutino';
+
+select * from capacitaciones_economicas;
+
+/* Por último, actualice 5 cursos y 3 operadores. */
+
+select * from capacitacion;
+update capacitacion set horario = '19:15:00' where codigo_curso = 10119;
+update capacitacion set costo_realizacion = 160520 where codigo_curso = 18383;
+update capacitacion set horario = '17:15:00' where codigo_curso = 28393;
+update capacitacion set costo_realizacion = 175689 where codigo_curso = 38282;
+update capacitacion set fecha_creacion = '2020-01-19' where codigo_curso = 49254;
+
+select * from operadores;
+update operadores set direccion = 'Lincoyán 90' where run = '11.326.029-K';
+update operadores set nombre = 'Julieta' where run = '11.938.125-3';
+update operadores set email = 'Pedrito_3232@gmail.com' where run = '15.976.129-4';
+
+/*___Leandro Villalba___*/
