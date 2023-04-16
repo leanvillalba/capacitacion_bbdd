@@ -97,3 +97,49 @@ select * from capacitacion order by fecha_creacion desc;
 select max(costo_realizacion) as capacitacion_mas_costosa from capacitacion;
 select nombre, costo_realizacion from capacitacion order by costo_realizacion desc;
 
+/*____________________Ejercicio Individual 2____________________*/
+/*- Agregue el campo salario al Operador y registre salarios a los operadores ya registrados*/
+alter table operadores add column salario float;
+update operadores set salario = 690344.00 where run = '11.326.029-K';
+update operadores set salario = 495204.00 where run = '11.938.125-3';
+update operadores set salario = 790002.00 where run = '14.848.332-2';
+update operadores set salario = 573102.00 where run = '15.976.129-4';
+update operadores set salario = 480234.00 where run = '16.333.547-2';
+update operadores set salario = 644982.00 where run = '17.002.849-2';
+update operadores set salario = 433000.00 where run = '17.243.435-K';
+update operadores set salario = 550889.00 where run = '18.123.249-7';
+update operadores set salario = 890123.00 where run = '26.342.927-9';
+update operadores set salario = 992000.00 where run = '7.343.444-4';
+select * from operadores;
+
+/* Inserte 3 capacitaciones nuevas. */
+insert into capacitacion values (77833,'Sringboot', '17:00:00', 200980.00, '2022-12-21');
+insert into capacitacion values (77894,'Seguridad', '08:00:00', 210333.00, '2022-11-30');
+insert into capacitacion values (789878,'Liderazgo', '18:00:00',212235.00, '2021-10-02');
+
+/* Inserte 3 operadores nuevos. */
+insert into operadores values('17.324.928-4', 'Gustavo', 'Riquelme', 'Av Pedri 980', 'gus_rqu@gmail.com', '2022-11-03', 650000.00);
+insert into operadores values('20.243.989-K', 'Noemi', 'Diaz', 'Calle 205', 'noex@gmail.com', '2022-10-15', 560900.00);
+insert into operadores values('13.083.983-2', 'Antonella', 'Villa', 'Chile 2523', 'antoanto_@gmail.com', '2012-09-23', 750566.00);
+
+select * from operadores;
+
+/* ¿Cuál es la capacitación más costosa? Selecciónelo. */
+select max(costo_realizacion) from capacitacion;
+select * from capacitacion order by costo_realizacion desc;
+
+/* ¿Cuál es el operador con menor salario? Selecciónelo. */
+select min(salario) from operadores;
+select salario from operadores order by salario;
+
+/* Seleccione las capacitaciones más costosas que el promedio. */
+select nombre, costo_realizacion from capacitacion where costo_realizacion > (select avg(costo_realizacion) from capacitacion);
+select avg(costo_realizacion) from capacitacion;
+select costo_realizacion from capacitacion order by costo_realizacion desc;
+
+/*Cree una tabla con las capacitaciones menos costosas que el promedio. La tabla debe tener por 
+nombre Capacitaciones Económicos. */
+create table capacitaciones_economicas as select nombre, costo_realizacion from capacitacion where costo_realizacion < (select avg(costo_realizacion) from capacitacion);
+select * from capacitaciones_economicas;
+
+
